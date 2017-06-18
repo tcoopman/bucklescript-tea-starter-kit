@@ -1,0 +1,10 @@
+{
+  "name": "bucklescript-tea-starter-kit",
+  "version": "0.1.0",
+  "sources": [
+    "src"
+  ],
+  "package-specs": ["es6"],
+  "bs-dependencies": ["bucklescript-tea"],
+  "bsc-flags": [ "-no-alias-deps", "-color", "always", "-w", "-40+6+7+27+32..39+44+45", "-w @8"]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "bucklescript-tea-starter-kit",
+  "version": "0.1.0",
+  "scripts": {
+    "clean": "bsb -clean",
+    "clean:all": "bsb -clean-world",
+    "build:bsb": "bsb -make-world",
+    "build:js": "rollup -c",
+    "serve": "serve release",
+    "build": "run-s build:bsb build:js",
+    "watch:bsb": "bsb -make-world -w",
+    "watch:js": "rollup -c -w",
+    "watch": "run-p watch:bsb watch:js serve"
+  },
+  "keywords": [
+    "Bucklescript"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "bs-platform": "^1.7.5",
+    "bucklescript-tea": "^0.6.0",
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.43.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-watch": "^4.0.0",
+    "serve": "^5.2.2"
+  }
+}
