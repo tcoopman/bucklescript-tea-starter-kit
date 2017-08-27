@@ -372,153 +372,6 @@ var imul = ( Math.imul || function (x,y) {
 
 /* two_ptr_32_dbl Not a pure module */
 
-function parse_digit(c) {
-  if (c >= 65) {
-    if (c >= 97) {
-      if (c >= 123) {
-        return -1;
-      } else {
-        return c - 87 | 0;
-      }
-    } else if (c >= 91) {
-      return -1;
-    } else {
-      return c - 55 | 0;
-    }
-  } else if (c > 57 || c < 48) {
-    return -1;
-  } else {
-    return c - /* "0" */48 | 0;
-  }
-}
-
-function int_of_string_base(param) {
-  switch (param) {
-    case 0 : 
-        return 8;
-    case 1 : 
-        return 16;
-    case 2 : 
-        return 10;
-    case 3 : 
-        return 2;
-    
-  }
-}
-
-function parse_sign_and_base(s) {
-  var sign = 1;
-  var base = /* Dec */2;
-  var i = 0;
-  if (s[i] === "-") {
-    sign = -1;
-    i = i + 1 | 0;
-  }
-  var match = s.charCodeAt(i);
-  var match$1 = s.charCodeAt(i + 1 | 0);
-  if (match === 48) {
-    if (match$1 >= 89) {
-      if (match$1 !== 98) {
-        if (match$1 !== 111) {
-          if (match$1 === 120) {
-            base = /* Hex */1;
-            i = i + 2 | 0;
-          }
-          
-        } else {
-          base = /* Oct */0;
-          i = i + 2 | 0;
-        }
-      } else {
-        base = /* Bin */3;
-        i = i + 2 | 0;
-      }
-    } else if (match$1 !== 66) {
-      if (match$1 !== 79) {
-        if (match$1 >= 88) {
-          base = /* Hex */1;
-          i = i + 2 | 0;
-        }
-        
-      } else {
-        base = /* Oct */0;
-        i = i + 2 | 0;
-      }
-    } else {
-      base = /* Bin */3;
-      i = i + 2 | 0;
-    }
-  }
-  return /* tuple */[
-          i,
-          sign,
-          base
-        ];
-}
-
-function caml_int_of_string(s) {
-  var match = parse_sign_and_base(s);
-  var i = match[0];
-  var base = int_of_string_base(match[2]);
-  var threshold = 4294967295;
-  var len = s.length;
-  var c = i < len ? s.charCodeAt(i) : /* "\000" */0;
-  var d = parse_digit(c);
-  if (d < 0 || d >= base) {
-    throw [
-          failure,
-          "int_of_string"
-        ];
-  }
-  var aux = function (_acc, _k) {
-    while(true) {
-      var k = _k;
-      var acc = _acc;
-      if (k === len) {
-        return acc;
-      } else {
-        var a = s.charCodeAt(k);
-        if (a === /* "_" */95) {
-          _k = k + 1 | 0;
-          continue ;
-          
-        } else {
-          var v = parse_digit(a);
-          if (v < 0 || v >= base) {
-            throw [
-                  failure,
-                  "int_of_string"
-                ];
-          } else {
-            var acc$1 = base * acc + v;
-            if (acc$1 > threshold) {
-              throw [
-                    failure,
-                    "int_of_string"
-                  ];
-            } else {
-              _k = k + 1 | 0;
-              _acc = acc$1;
-              continue ;
-              
-            }
-          }
-        }
-      }
-    }
-  };
-  var res = match[1] * aux(d, i + 1 | 0);
-  var or_res = res | 0;
-  if (base === 10 && res !== or_res) {
-    throw [
-          failure,
-          "int_of_string"
-        ];
-  }
-  return or_res;
-}
-
-
 /* float_of_string Not a pure module */
 
 function caml_create_string(len) {
@@ -839,17 +692,6 @@ function fullnode(namespace, tagName, key, unique, props, vdoms) {
             unique,
             props,
             vdoms
-          ]);
-}
-
-function onCB(name, key, cb) {
-  return /* Event */__(3, [
-            name,
-            /* EventHandlerCallback */__(0, [
-                key,
-                cb
-              ]),
-            [/* None */0]
           ]);
 }
 
@@ -2247,41 +2089,13 @@ function button($staropt$star, $staropt$star$1, props, nodes) {
   return fullnode("", "button", key, unique, props, nodes);
 }
 
-function input$prime($staropt$star, $staropt$star$1, props, nodes) {
-  var key = $staropt$star ? $staropt$star[0] : "";
-  var unique = $staropt$star$1 ? $staropt$star$1[0] : "";
-  return fullnode("", "input", key, unique, props, nodes);
-}
-
 var style$2 = style;
-
-function onChangeOpt($staropt$star, msg) {
-  var key = $staropt$star ? $staropt$star[0] : "";
-  return onCB("change", key, (function (ev) {
-                var match = ev.target;
-                if (match !== undefined) {
-                  var match$1 = match.value;
-                  if (match$1 !== undefined) {
-                    return _1(msg, match$1);
-                  } else {
-                    return /* None */0;
-                  }
-                } else {
-                  return /* None */0;
-                }
-              }));
-}
-
-function onChange($staropt$star, msg) {
-  var key = $staropt$star ? $staropt$star[0] : "";
-  return onChangeOpt(/* Some */[key], (function (ev) {
-                return /* Some */[_1(msg, ev)];
-              }));
-}
 
 function onClick(msg) {
   return onMsg("click", msg);
 }
+
+var noNode$1 = noNode;
 
 
 /* No side effect */
@@ -2296,10 +2110,18 @@ function init() {
 }
 
 function update(model, param) {
-  if (param) {
-    return param[0];
+  if (typeof param === "number") {
+    switch (param) {
+      case 0 : 
+          return model + 1 | 0;
+      case 1 : 
+          return model - 1 | 0;
+      case 2 : 
+          return 0;
+      
+    }
   } else {
-    return model + 1 | 0;
+    return param[0];
   }
 }
 
@@ -2314,10 +2136,6 @@ function view_button(title, msg) {
 }
 
 function view(model) {
-  var bug = function (foo) {
-    console.log(string_of_int(model));
-    return /* Set */[caml_int_of_string(foo)];
-  };
   return div$2(/* None */0, /* None */0, /* [] */0, /* :: */[
               span(/* None */0, /* None */0, /* :: */[
                     style$2("text-weight", "bold"),
@@ -2331,11 +2149,23 @@ function view(model) {
                 /* :: */[
                   view_button("Increment", /* Increment */0),
                   /* :: */[
-                    input$prime(/* None */0, /* None */0, /* :: */[
-                          onChange(/* Some */[string_of_int(model)], bug),
-                          /* [] */0
-                        ], /* [] */0),
-                    /* [] */0
+                    br(/* [] */0),
+                    /* :: */[
+                      view_button("Decrement", /* Decrement */1),
+                      /* :: */[
+                        br(/* [] */0),
+                        /* :: */[
+                          view_button("Set to 42", /* Set */[42]),
+                          /* :: */[
+                            br(/* [] */0),
+                            /* :: */[
+                              model !== 0 ? view_button("Reset", /* Reset */2) : noNode$1,
+                              /* [] */0
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
                   ]
                 ]
               ]
@@ -2354,10 +2184,16 @@ function main(param, param$1) {
 
 var increment = /* Increment */0;
 
+var decrement = /* Decrement */1;
+
+var reset = /* Reset */2;
+
 
 /* No side effect */
 
 exports.increment = increment;
+exports.decrement = decrement;
+exports.reset = reset;
 exports.set = set;
 exports.init = init;
 exports.update = update;
