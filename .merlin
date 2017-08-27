@@ -2,7 +2,7 @@
 FLG -ppx /home/thomas/Workspace/bucklescript-tea-starter-kit/node_modules/bs-platform/bin/bsppx.exe
 S /home/thomas/Workspace/bucklescript-tea-starter-kit/node_modules/bs-platform/lib/ocaml
 B /home/thomas/Workspace/bucklescript-tea-starter-kit/node_modules/bs-platform/lib/ocaml
-FLG -nostdlib -no-alias-deps -color always -w -40+6+7+27+32..39+44+45 -w @8 -no-alias-deps -color always -w -40+6+7+27+32..39+44+45
+FLG -nostdlib -color always -w -40+6+7+27+32..39+44+45 -w @8 -no-alias-deps -color always -w -40+6+7+27+32..39+44+45
 S /home/thomas/Workspace/bucklescript-tea-starter-kit/node_modules/bucklescript-tea/lib/ocaml
 B /home/thomas/Workspace/bucklescript-tea-starter-kit/node_modules/bucklescript-tea/lib/ocaml
 S src
