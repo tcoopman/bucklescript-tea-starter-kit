@@ -23,3 +23,7 @@ lib/
 *.mliast
 .vscode
 node_modules
+release/main.js
+.merlin
+yarn.lock
+package-lock.json
