@@ -27,3 +27,4 @@ release/main.js
 .merlin
 yarn.lock
 package-lock.json
+.bsb.lock
