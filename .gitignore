@@ -28,3 +28,4 @@ release/main.js
 yarn.lock
 package-lock.json
 .bsb.lock
+*.bs.js
