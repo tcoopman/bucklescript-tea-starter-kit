@@ -11,5 +11,8 @@ export default {
         node_resolve({module: true, browser: true}),
         livereload('release')
     ],
-    name: 'starter'
+    name: 'starter',
+    watch: {
+        clearScreen: false
+    }
 }
