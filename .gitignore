@@ -25,7 +25,7 @@ lib/
 node_modules
 release/main.js
 .merlin
-yarn.lock
 package-lock.json
+yarn.lock
 .bsb.lock
 *.bs.js
