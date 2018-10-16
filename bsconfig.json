@@ -4,6 +4,7 @@
   "sources": ["src"],
   "package-specs": [{ "module": "es6", "in-source": true }],
   "suffix": ".bs.js",
+  "refmt": 3,
   "bs-dependencies": ["bucklescript-tea"],
   "bsc-flags": [
     "-bs-super-errors -no-alias-deps",
